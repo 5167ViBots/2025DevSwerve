@@ -46,11 +46,11 @@ public class RobotContainer {
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     /* Path follower */
-    private final SendableChooser<Command> autoChooser;
-    
+    //private final SendableChooser<Command> autoChooser;
+
     public RobotContainer() {
-                autoChooser = AutoBuilder.buildAutoChooser("Tests");
-        SmartDashboard.putData("Auto Mode", autoChooser);
+        //autoChooser = AutoBuilder.buildAutoChooser("Tests");
+        //SmartDashboard.putData("Auto Mode", autoChooser);
         configureBindings();
     }
 
@@ -93,6 +93,8 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
-        return autoChooser.getSelected();
+        return new Command() {
+            
+        };
     }
 }
