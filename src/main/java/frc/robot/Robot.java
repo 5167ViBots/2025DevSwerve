@@ -20,6 +20,9 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     m_robotContainer = new RobotContainer();
+    System.out.println("(o o)");
+    System.out.println("/___\\");
+    System.out.println("bob could really go for a burger right now");
   }
 
   @Override
@@ -79,7 +82,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    
+  }
 
   @Override
   public void teleopExit() {}

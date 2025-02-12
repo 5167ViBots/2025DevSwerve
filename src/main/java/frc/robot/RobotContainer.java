@@ -18,16 +18,20 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.AlignLeft;
+import frc.robot.commands.AlignRight;
 import frc.robot.commands.LightCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.LightsSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwitchSubsystem;
 
 public class RobotContainer {
 
 LightsSubsystem lights = new LightsSubsystem();
 SwitchSubsystem switcher = new SwitchSubsystem();
+LimelightSubsystem lime = new LimelightSubsystem();
     
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -72,6 +76,9 @@ SwitchSubsystem switcher = new SwitchSubsystem();
             )
         );
 
+                //bumpers are set to align the robot
+        joystick.rightBumper().whileTrue(new AlignRight(drivetrain, lime));
+        joystick.leftBumper().whileTrue(new AlignLeft(drivetrain, lime));
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
@@ -93,7 +100,7 @@ SwitchSubsystem switcher = new SwitchSubsystem();
         new Trigger(switcher::isItSwitched).whileTrue(new LightCommand(lights, 0.0, 225.0, 0.0));
 
         // reset the field-centric heading on left bumper press
-        joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        //joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
