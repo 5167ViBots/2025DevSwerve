@@ -9,20 +9,28 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 //import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AlignLeft;
 import frc.robot.commands.AlignRight;
+import frc.robot.commands.CoralIn;
+import frc.robot.commands.CoralOut;
+import frc.robot.commands.LiftUp;
 import frc.robot.commands.LightCommand;
+import frc.robot.commands.TopAlgaeIn;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.SwitchSubsystem;
@@ -32,6 +40,8 @@ public class RobotContainer {
 LightsSubsystem lights = new LightsSubsystem();
 SwitchSubsystem switcher = new SwitchSubsystem();
 LimelightSubsystem lime = new LimelightSubsystem();
+LiftSubsystem lift = new LiftSubsystem();
+IntakeSubsystem intake = new IntakeSubsystem();
     
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -51,6 +61,7 @@ LimelightSubsystem lime = new LimelightSubsystem();
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     private final CommandXboxController joystick = new CommandXboxController(0);
+    private final CommandJoystick buttonBoard = new CommandJoystick(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric()
@@ -59,10 +70,16 @@ LimelightSubsystem lime = new LimelightSubsystem();
     /* Path follower */
     //private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
-        // Configure the trigger bindings
+
         configureBindings();
       }
     
+
+
+      private void registerPathPlannerCommands() {
+         NamedCommands.registerCommand("IntakeUp", new LiftUp(lift));    
+        
+    }
 
     public void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
@@ -107,6 +124,9 @@ LimelightSubsystem lime = new LimelightSubsystem();
         //assings pov right and left to a color when pushed
         joystick.povRight().whileTrue(new LightCommand(lights, 0.0, 225.0, 0.0));
         joystick.povLeft().whileTrue(new LightCommand(lights, 225.0, 0.0, 225.0));
+
+        buttonBoard.button(1).whileTrue(new CoralIn(intake));
+        buttonBoard.button(2).whileTrue(new CoralOut(intake));
     }
 
     public Command getAutonomousCommand() {

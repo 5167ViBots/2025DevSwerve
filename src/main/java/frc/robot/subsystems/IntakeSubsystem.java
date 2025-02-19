@@ -29,11 +29,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void coralIn(){
-    coralIntake.setControl(new DutyCycleOut(.2));//TBD
+    coralIntake.setControl(new DutyCycleOut(.3));//TBD
   }
 
   public void coralOut(){
-    coralIntake.setControl(new DutyCycleOut(-.2));//TBD
+    coralIntake.setControl(new DutyCycleOut(-.3));//TBD
   }
 
   public void topAlgaeStop(){
@@ -41,11 +41,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void topAgaeIn(){
-    topAlgaeIntake.setControl(new DutyCycleOut(.2));//TBD
+    topAlgaeIntake.setControl(new DutyCycleOut(.6));//TBD
   }
 
   public void topAlgaeOut(){
-    topAlgaeIntake.setControl(new DutyCycleOut(-.2));//TBD
+    topAlgaeIntake.setControl(new DutyCycleOut(-.6));//TBD
   }
 
   public void topIntakeAngleFeed(){

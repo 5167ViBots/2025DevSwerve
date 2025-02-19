@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 //import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -42,6 +43,26 @@ public class LiftSubsystem extends SubsystemBase{
     //lift1.setControl(new PositionDutyCycle(oneBottom));
     lift1.setControl(new DutyCycleOut(-.4));
     //lift2.setControl(new PositionDutyCycle(twoBottom)); 
+  }
+
+  public void L1(){
+    lift1.setControl(new PositionDutyCycle(0));
+  }
+
+  public void L2(){
+    lift1.setControl(new PositionDutyCycle(0)); 
+  }
+
+  public void L3(){
+    lift1.setControl(new PositionDutyCycle(0));
+  }
+
+  public void L4(){
+    lift1.setControl(new PositionDutyCycle(0));
+  }
+
+  public void HumanPlayerStation(){
+    lift1.setControl(new PositionDutyCycle(0));
   }
 
   /**
