@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.LimelightSubsystem;
 
-public class AlignRight extends Command{
+public class AlignBack extends Command{
     CommandSwerveDrivetrain drive;
     LimelightSubsystem lime;
-    public AlignRight(CommandSwerveDrivetrain driveSubsystem, LimelightSubsystem limelightSubsystem){
+    public AlignBack(CommandSwerveDrivetrain driveSubsystem, LimelightSubsystem limelightSubsystem){
         drive = driveSubsystem;
         lime = limelightSubsystem;
         addRequirements(drive);

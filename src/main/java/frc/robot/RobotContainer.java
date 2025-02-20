@@ -12,6 +12,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +23,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AlignLeft;
 import frc.robot.commands.AlignRight;
+import frc.robot.commands.BottomAlgaeIn;
+import frc.robot.commands.BottomAlgaeIntakeIn;
+import frc.robot.commands.BottomAlgaeIntakeOut;
+import frc.robot.commands.BottomAlgaeOut;
 import frc.robot.commands.CoralIn;
 import frc.robot.commands.CoralOut;
 import frc.robot.commands.HumanPlayerStation;
@@ -34,6 +39,9 @@ import frc.robot.commands.LightCommand;
 import frc.robot.commands.ManualLiftDown;
 import frc.robot.commands.ManualLiftUp;
 import frc.robot.commands.TopAlgaeIn;
+import frc.robot.commands.TopAlgaeOut;
+import frc.robot.commands.TopIntakeAngleFeed;
+import frc.robot.commands.TopIntakeAngleShoot;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -80,14 +88,47 @@ IntakeSubsystem intake = new IntakeSubsystem();
     public RobotContainer() {
         registerPathPlannerCommands();
         configureBindings();
+        registerAutons();
       }
     
 
 
       private void registerPathPlannerCommands() {
-         NamedCommands.registerCommand("IntakeUp", new LiftUp(lift));    
-        
-    }
+         NamedCommands.registerCommand("L1", new L1(lift)); 
+         NamedCommands.registerCommand("L2", new L2(lift));
+         NamedCommands.registerCommand("L3", new L3(lift));
+         NamedCommands.registerCommand("L4", new L4(lift));
+         NamedCommands.registerCommand("HumanPlayerStation", new HumanPlayerStation(lift));
+         NamedCommands.registerCommand("CoralIn", new CoralIn(intake));
+         NamedCommands.registerCommand("CoralOut", new CoralOut(intake));
+         NamedCommands.registerCommand("TopAglaeIn", new TopAlgaeIn(intake));
+         NamedCommands.registerCommand("TopAglaeOut", new TopAlgaeOut(intake));
+         NamedCommands.registerCommand("TopIntakeAngleFeed", new TopIntakeAngleFeed(intake));
+         NamedCommands.registerCommand("TopIntakeAngleShoot", new TopIntakeAngleShoot(intake));
+         NamedCommands.registerCommand("BottomAlgeaIntakeIn", new BottomAlgaeIntakeIn(intake));
+         NamedCommands.registerCommand("BottomAlgeaIntakeOut", new BottomAlgaeIntakeOut(intake));
+         NamedCommands.registerCommand("BottomAlgeaIn", new BottomAlgaeIn(intake));
+         NamedCommands.registerCommand("BottomAlgeaOut", new BottomAlgaeOut(intake));
+        }
+    
+        public SendableChooser<String> AutonChooser = new SendableChooser<String>();
+    private void registerAutons() {
+    
+    //Create Shuffleboard Tab
+    var tab = Shuffleboard.getTab("Auton");
+
+    //Register Auton modes
+    AutonChooser.addOption("Leave and Score","Leave and Score");
+    
+    
+    //Set the default Auton
+    AutonChooser.setDefaultOption("Leave and Score","Leave and Score");
+    
+    //Add to shuffleboard
+    tab.add(AutonChooser);
+  }
+
+ 
 
     public void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
