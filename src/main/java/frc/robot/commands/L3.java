@@ -35,6 +35,7 @@ public class L3 extends Command {
   @Override
   public void execute() {
     liftsubsystem.L3();
+    
   }
 
   // Called once the command ends or is interrupted.

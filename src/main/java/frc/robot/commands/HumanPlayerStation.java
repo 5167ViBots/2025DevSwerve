@@ -35,6 +35,7 @@ public class HumanPlayerStation extends Command {
   @Override
   public void execute() {
     liftsubsystem.HumanPlayerStation();
+    
   }
 
   // Called once the command ends or is interrupted.

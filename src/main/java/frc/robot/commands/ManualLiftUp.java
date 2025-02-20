@@ -7,10 +7,10 @@ package frc.robot.commands;
 import frc.robot.subsystems.LiftSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
-// This is where the L2 command is clarified
+// This is where the ManualLiftUp command is clarified
 
 /** An example command that uses an example subsystem. */
-public class L2 extends Command {
+public class ManualLiftUp extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final LiftSubsystem liftsubsystem;
 
@@ -19,7 +19,7 @@ public class L2 extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public L2(LiftSubsystem subsystem) {
+  public ManualLiftUp(LiftSubsystem subsystem) {
     liftsubsystem = subsystem;
     System.out.println("LiftCommandSubsystem");
 
@@ -34,19 +34,18 @@ public class L2 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    liftsubsystem.L2();
-   
+    liftsubsystem.LastPositionUp();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    liftsubsystem.liftStop();
+    //liftsubsystem.liftStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !liftsubsystem.IsUpSafe();
+    return true;
   }
 }

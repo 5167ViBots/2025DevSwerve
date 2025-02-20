@@ -4,10 +4,10 @@ public class Constants {
     public static final String RioCanBus = "rio";
 
     public static class LiftSubsystemConstants {
-    public static final int liftMotorID1 = 10;
+    public static final int liftMotorID1 = 9;
     public static final String liftMotor1Can = RioCanBus;
 
-    public static final int liftMotorID2 = 9;
+    public static final int liftMotorID2 = 10;
     public static final String liftMotor2Can = RioCanBus;
     }
 

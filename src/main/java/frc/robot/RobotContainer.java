@@ -24,8 +24,15 @@ import frc.robot.commands.AlignLeft;
 import frc.robot.commands.AlignRight;
 import frc.robot.commands.CoralIn;
 import frc.robot.commands.CoralOut;
+import frc.robot.commands.HumanPlayerStation;
+import frc.robot.commands.L1;
+import frc.robot.commands.L2;
+import frc.robot.commands.L3;
+import frc.robot.commands.L4;
 import frc.robot.commands.LiftUp;
 import frc.robot.commands.LightCommand;
+import frc.robot.commands.ManualLiftDown;
+import frc.robot.commands.ManualLiftUp;
 import frc.robot.commands.TopAlgaeIn;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -57,6 +64,7 @@ IntakeSubsystem intake = new IntakeSubsystem();
 
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+    
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
@@ -70,7 +78,7 @@ IntakeSubsystem intake = new IntakeSubsystem();
     /* Path follower */
     //private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
-
+        registerPathPlannerCommands();
         configureBindings();
       }
     
@@ -127,6 +135,14 @@ IntakeSubsystem intake = new IntakeSubsystem();
 
         buttonBoard.button(1).whileTrue(new CoralIn(intake));
         buttonBoard.button(2).whileTrue(new CoralOut(intake));
+        buttonBoard.button(7).whileTrue(new L1(lift));
+        buttonBoard.button(8).whileTrue(new L2(lift));
+        buttonBoard.button(9).whileTrue(new L3(lift));
+        buttonBoard.button(10).whileTrue(new L4(lift));
+        buttonBoard.button(3).whileTrue(new HumanPlayerStation(lift));
+        buttonBoard.button(4).onTrue(new ManualLiftUp(lift));
+        buttonBoard.button(5).onTrue(new ManualLiftDown(lift));
+        
     }
 
     public Command getAutonomousCommand() {
