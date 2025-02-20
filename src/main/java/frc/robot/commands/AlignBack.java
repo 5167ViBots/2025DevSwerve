@@ -5,12 +5,17 @@ import com.ctre.phoenix6.swerve.SwerveRequest.RobotCentric;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
+import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.LimelightSubsystem;
 
 public class AlignBack extends Command{
+public class AlignBack extends Command{
     CommandSwerveDrivetrain drive;
     LimelightSubsystem lime;
+    public AlignBack(CommandSwerveDrivetrain driveSubsystem, LimelightSubsystem limelightSubsystem){
+    CommandPS5Controller joystick;
     public AlignBack(CommandSwerveDrivetrain driveSubsystem, LimelightSubsystem limelightSubsystem){
         drive = driveSubsystem;
         lime = limelightSubsystem;
@@ -29,12 +34,12 @@ public class AlignBack extends Command{
     double kPx = .013;
     double kPy = .018;
 
-    double rightXErrorRate = NetworkTableInstance.getDefault().getTable("limelight-righty").getEntry("tx").getDouble(0);
-    double rightYErrorRate = NetworkTableInstance.getDefault().getTable("limelight-righty").getEntry("ty").getDouble(0);
+    double backXErrorRate = NetworkTableInstance.getDefault().getTable("limelight-righty").getEntry("tx").getDouble(0);
+    double backYErrorRate = NetworkTableInstance.getDefault().getTable("limelight-righty").getEntry("ty").getDouble(0);
     //If the robot has a target on the right limelight, alight
-    if(lime.rightHasTarget()){
+    if(lime.backHasTarget()){
     //drive.RobotDrive(-kPy*rightYErrorRate, kPx*rightXErrorRate, 0.0);
-    drive.RobotDrive(0, kPx*rightXErrorRate, 0.0);
+    drive.RobotDrive(-joystick.getLeftY(), kPx*backXErrorRate, 0.0);
     }
 
     }
