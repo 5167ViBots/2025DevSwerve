@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,14 +39,17 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void topAlgaeStop(){
     topAlgaeIntake.setControl(new DutyCycleOut(0));
+    coralIntake.setControl(new DutyCycleOut(0));
   }
 
   public void topAgaeIn(){
     topAlgaeIntake.setControl(new DutyCycleOut(.6));//TBD
+    coralIntake.setControl(new DutyCycleOut(-.6));
   }
 
   public void topAlgaeOut(){
     topAlgaeIntake.setControl(new DutyCycleOut(-.6));//TBD
+    coralIntake.setControl(new DutyCycleOut(.6));
   }
 
   public void topIntakeAngleFeed(){
@@ -72,16 +76,16 @@ public class IntakeSubsystem extends SubsystemBase {
     bottomAlgeaIntake.setControl(new DutyCycleOut(-.2));//TBD
   }
 
-  public void bottomAlgaeIntakeStop(){
-    bottomAlgeaIntakeSetter.setControl(new DutyCycleOut(0));
+  public void bottomAlgaeIntakeSlightOut(){
+    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(0));
   }
 
   public void bottomAlgaeIntakeOut(){
-    bottomAlgeaIntakeSetter.setControl(new DutyCycleOut(.2));//TBD
+    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(.2));//TBD
   }
 
   public void bottomAlgaeIntakeIn(){
-     bottomAlgeaIntakeSetter.setControl(new DutyCycleOut(-.2));//TBD
+     bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(-.2));//TBD
   }
 
   /**

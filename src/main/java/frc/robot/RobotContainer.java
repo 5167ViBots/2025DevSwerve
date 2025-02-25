@@ -26,6 +26,7 @@ import frc.robot.commands.AlignRight;
 import frc.robot.commands.BottomAlgaeIn;
 import frc.robot.commands.BottomAlgaeIntakeIn;
 import frc.robot.commands.BottomAlgaeIntakeOut;
+import frc.robot.commands.BottomAlgaeIntakeSlightOut;
 import frc.robot.commands.BottomAlgaeOut;
 import frc.robot.commands.CoralIn;
 import frc.robot.commands.CoralOut;
@@ -107,6 +108,7 @@ IntakeSubsystem intake = new IntakeSubsystem();
          NamedCommands.registerCommand("TopIntakeAngleShoot", new TopIntakeAngleShoot(intake));
          NamedCommands.registerCommand("BottomAlgeaIntakeIn", new BottomAlgaeIntakeIn(intake));
          NamedCommands.registerCommand("BottomAlgeaIntakeOut", new BottomAlgaeIntakeOut(intake));
+         NamedCommands.registerCommand("BottomAlgeaIntakeSlightOut", new BottomAlgaeIntakeSlightOut(intake));
          NamedCommands.registerCommand("BottomAlgeaIn", new BottomAlgaeIn(intake));
          NamedCommands.registerCommand("BottomAlgeaOut", new BottomAlgaeOut(intake));
         }
