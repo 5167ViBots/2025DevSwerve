@@ -18,9 +18,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.AlignBack;
 import frc.robot.commands.AlignLeft;
 import frc.robot.commands.AlignRight;
 import frc.robot.commands.BottomAlgaeIn;
@@ -28,8 +30,10 @@ import frc.robot.commands.BottomAlgaeIntakeIn;
 import frc.robot.commands.BottomAlgaeIntakeOut;
 import frc.robot.commands.BottomAlgaeIntakeSlightOut;
 import frc.robot.commands.BottomAlgaeOut;
+import frc.robot.commands.CageUp;
 import frc.robot.commands.CoralIn;
 import frc.robot.commands.CoralOut;
+import frc.robot.commands.CoralStop;
 import frc.robot.commands.HumanPlayerStation;
 import frc.robot.commands.L1;
 import frc.robot.commands.L2;
@@ -44,6 +48,7 @@ import frc.robot.commands.TopAlgaeOut;
 import frc.robot.commands.TopIntakeAngleFeed;
 import frc.robot.commands.TopIntakeAngleShoot;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.CageSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
@@ -58,6 +63,7 @@ SwitchSubsystem switcher = new SwitchSubsystem();
 LimelightSubsystem lime = new LimelightSubsystem();
 LiftSubsystem lift = new LiftSubsystem();
 IntakeSubsystem intake = new IntakeSubsystem();
+CageSubsystem cage = new CageSubsystem();
     
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -73,12 +79,12 @@ IntakeSubsystem intake = new IntakeSubsystem();
 
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-    
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController joystick = new CommandXboxController(0);
+    private final CommandPS5Controller joystick = new CommandPS5Controller(0);
     private final CommandJoystick buttonBoard = new CommandJoystick(1);
+    private final CommandJoystick buttonBoardJr = new CommandJoystick(2);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric()
@@ -130,8 +136,6 @@ IntakeSubsystem intake = new IntakeSubsystem();
     tab.add(AutonChooser);
   }
 
- 
-
     public void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
@@ -145,10 +149,11 @@ IntakeSubsystem intake = new IntakeSubsystem();
         );
 
                 //bumpers are set to align the robot
-        joystick.rightBumper().whileTrue(new AlignRight(drivetrain, lime));
-        joystick.leftBumper().whileTrue(new AlignLeft(drivetrain, lime));
-        joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        joystick.b().whileTrue(drivetrain.applyRequest(() ->
+        joystick.R1().whileTrue(new AlignRight(drivetrain, lime));
+        joystick.L1().whileTrue(new AlignLeft(drivetrain, lime));
+        joystick.square().whileTrue(new AlignBack(drivetrain, lime));
+        joystick.cross().whileTrue(drivetrain.applyRequest(() -> brake));
+        joystick.circle().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
         ));
 
@@ -161,11 +166,12 @@ IntakeSubsystem intake = new IntakeSubsystem();
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        // joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        // joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        // joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        // joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
         new Trigger(switcher::isItSwitched).whileTrue(new LightCommand(lights, 0.0, 225.0, 0.0));
+        //new Trigger(switcher::isItSwitched).onTrue(new CoralStop(intake));
 
         // reset the field-centric heading on left bumper press
         //joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
@@ -176,16 +182,25 @@ IntakeSubsystem intake = new IntakeSubsystem();
         joystick.povRight().whileTrue(new LightCommand(lights, 0.0, 225.0, 0.0));
         joystick.povLeft().whileTrue(new LightCommand(lights, 225.0, 0.0, 225.0));
 
-        buttonBoard.button(1).whileTrue(new CoralIn(intake));
-        buttonBoard.button(2).whileTrue(new CoralOut(intake));
-        buttonBoard.button(7).whileTrue(new L1(lift));
-        buttonBoard.button(8).whileTrue(new L2(lift));
-        buttonBoard.button(9).whileTrue(new L3(lift));
-        buttonBoard.button(10).whileTrue(new L4(lift));
-        buttonBoard.button(3).whileTrue(new HumanPlayerStation(lift));
-        buttonBoard.button(4).onTrue(new ManualLiftUp(lift));
-        buttonBoard.button(5).onTrue(new ManualLiftDown(lift));
-        
+        buttonBoard.button(1).whileTrue(new HumanPlayerStation(lift));
+        buttonBoard.button(2).whileTrue(new L4(lift));
+        buttonBoard.button(3).whileTrue(new L3(lift));
+        buttonBoard.button(4).whileTrue(new L2(lift));
+        buttonBoard.button(5).whileTrue(new L1(lift));
+
+        buttonBoard.button(6).whileTrue(new BottomAlgaeIntakeIn(intake));
+        buttonBoard.button(7).whileTrue(new BottomAlgaeIntakeOut(intake));
+
+        buttonBoard.button(8).whileTrue(new TopIntakeAngleShoot(intake));
+        buttonBoard.button(9).whileTrue(new TopIntakeAngleFeed(intake));
+
+        buttonBoard.button(10).whileTrue(new ManualLiftUp(lift));
+        buttonBoard.button(11).whileTrue(new ManualLiftDown(lift));
+        buttonBoard.button(12).whileTrue(new CageUp(cage));
+        buttonBoardJr.button(6).whileTrue(new CoralIn(intake));
+        buttonBoardJr.button(7).whileTrue(new CoralOut(intake));
+        buttonBoardJr.button(4).whileTrue(new TopAlgaeIn(intake));
+        buttonBoardJr.button(5).whileTrue(new TopAlgaeOut(intake));
     }
 
     public Command getAutonomousCommand() {
