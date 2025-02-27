@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.AlignBack;
 import frc.robot.commands.AlignLeft;
 import frc.robot.commands.AlignRight;
 import frc.robot.commands.BottomAlgaeIn;
@@ -151,7 +150,6 @@ CageSubsystem cage = new CageSubsystem();
                 //bumpers are set to align the robot
         joystick.R1().whileTrue(new AlignRight(drivetrain, lime));
         joystick.L1().whileTrue(new AlignLeft(drivetrain, lime));
-        joystick.square().whileTrue(new AlignBack(drivetrain, lime));
         joystick.cross().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.circle().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))

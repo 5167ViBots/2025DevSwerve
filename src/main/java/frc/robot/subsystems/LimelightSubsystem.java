@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // import frc.robot.util.XYOutputs;
 
 public class LimelightSubsystem extends SubsystemBase{
-    private NetworkTableEntry tvR, txR, tyR, taR, camModeR, ledModeR, pipelineR, tvL, txL, tyL, taL, camModeL, ledModeL, pipelineL;
-    private NetworkTable rightyTable, leftyTable;
+    private NetworkTableEntry tvR, txR, tyR, taR, camModeR, ledModeR, pipelineR, tvL, txL, tyL, taL, camModeL, ledModeL, pipelineL, tvB, txB, tyB, taB, camModeB, ledModeB, pipelineB;
+    private NetworkTable rightyTable, leftyTable, backTable;
     private double limelightDriveCommand, limelightSteerCommand, k_drive, k_steer, k_minError, k_maxDrive;
     private boolean invertRot, invertFwd;
     
@@ -26,6 +26,7 @@ public class LimelightSubsystem extends SubsystemBase{
         
     leftyTable = NetworkTableInstance.getDefault().getTable("limelight-lefty");
     rightyTable = NetworkTableInstance.getDefault().getTable("limelight-righty");
+    backTable = NetworkTableInstance.getDefault().getTable("limelight-backy");
         // this.k_drive = k_drive;
         // this.k_steer = k_steer ;
         // this.k_minError = k_minError;
@@ -49,6 +50,15 @@ public class LimelightSubsystem extends SubsystemBase{
         ledModeR = rightyTable.getEntry("ledMode");
         pipelineR = rightyTable.getEntry("pipeline");
         
+
+        tvB = rightyTable.getEntry("tv");
+        txB = rightyTable.getEntry("tx");
+        tyB = rightyTable.getEntry("ty");
+        taB = rightyTable.getEntry("ta");
+        camModeB = rightyTable.getEntry("camMode");
+        ledModeB = rightyTable.getEntry("ledMode");
+        pipelineB = rightyTable.getEntry("pipeline");
+
         limelightDriveCommand = 0.0;
         limelightSteerCommand = 0.0;
     }
@@ -60,6 +70,8 @@ public class LimelightSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("tyR", getYR());
         SmartDashboard.putNumber("txL", getXL());
         SmartDashboard.putNumber("tyL", getYL());
+        SmartDashboard.putNumber("txB", getXL());
+        SmartDashboard.putNumber("tyB", getYL());
         SmartDashboard.putNumber("limelightDrive", limelightDriveCommand);
         SmartDashboard.putNumber("limelightSteer", limelightSteerCommand);
 
@@ -67,11 +79,15 @@ public class LimelightSubsystem extends SubsystemBase{
   double rightYErrorRate = NetworkTableInstance.getDefault().getTable("limelight-righty").getEntry("ty").getDouble(0);      
   double leftXErrorRate = NetworkTableInstance.getDefault().getTable("limelight-lefty").getEntry("tx").getDouble(0);
   double leftYErrorRate = NetworkTableInstance.getDefault().getTable("limelight-lefty").getEntry("ty").getDouble(0);
+  double backXErrorRate = NetworkTableInstance.getDefault().getTable("limelight-backy").getEntry("tx").getDouble(0);
+  double backYErrorRate = NetworkTableInstance.getDefault().getTable("limelight-backy").getEntry("ty").getDouble(0);
   
   SmartDashboard.putNumber("rightDriveRateY", -kPy*rightYErrorRate);
   SmartDashboard.putNumber("rightDriveRateX", kPx*rightXErrorRate);
   SmartDashboard.putNumber("leftDriveRateY", -kPy*leftYErrorRate);
   SmartDashboard.putNumber("leftDriveRateX", kPx*leftXErrorRate);
+  SmartDashboard.putNumber("backDriveRateY", -kPy*backYErrorRate);
+  SmartDashboard.putNumber("backDriveRateX", kPx*backXErrorRate);
     }
 
     /* Visible Values (tv)
@@ -98,22 +114,40 @@ public class LimelightSubsystem extends SubsystemBase{
     }
     
     public double getVL() {
-      return tvR.getDouble(0);
+      return tvL.getDouble(0);
     }
     
     // Limelight Target/Crosshair X Axis Error
     public double getXL() {
-      return txR.getDouble(0);
+      return txL.getDouble(0);
     }
     
     // Limelight Target/Crosshair Y Axis Error
     public double getYL() {
-      return tyR.getDouble(0);
+      return tyL.getDouble(0);
     }
     
     // Limelight Target Area
     public double getAL() {
-      return taR.getDouble(0);
+      return taL.getDouble(0);
+    }
+    public double getVB() {
+        return tvB.getDouble(0);
+    }
+    
+    // Limelight Target/Crosshair X Axis Error
+    public double getXB() {
+        return txB.getDouble(0);
+    }
+    
+    // Limelight Target/Crosshair Y Axis Error
+    public double getYB() {
+        return tyB.getDouble(0);
+    }
+    
+    // Limelight Target Area
+    public double getAB() {
+        return taB.getDouble(0);
     }
     /**
      * Get the PipeType from the limelight
@@ -247,6 +281,14 @@ public class LimelightSubsystem extends SubsystemBase{
           } else {
               return false;
           }
+      }
+
+      public boolean backHasTarget() {
+        if (getVB() == 1) {
+            return true;
+        } else {
+            return false;
+        }
       }
 
     // public boolean doneTargeting() {

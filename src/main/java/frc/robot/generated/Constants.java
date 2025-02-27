@@ -4,10 +4,10 @@ public class Constants {
     public static final String RioCanBus = "rio";
 
     public static class LiftSubsystemConstants {
-    public static final int liftMotorID1 = 7;
+    public static final int liftMotorID1 = 17;
     public static final String liftMotor1Can = RioCanBus;
 
-    public static final int liftMotorID2 = 5;
+    public static final int liftMotorID2 = 15;
     public static final String liftMotor2Can = RioCanBus;
     }
 
@@ -19,15 +19,15 @@ public class Constants {
     public static final int topAlgaeIntake = 33;
     public static final String topAlgaeIntakeCan = RioCanBus;
         
-    public static final int bottomAlgeaIntake = 8;
+    public static final int bottomAlgeaIntake = 18;
     public static final String bottomAlgeaIntakeCAN = RioCanBus;
 
-    public static final int bottomAlgeaIntakeSetter = 6;
+    public static final int bottomAlgeaIntakeSetter = 16;
     public static final String bottomAlgeaIntakeSetterCAN = RioCanBus;
     }
 
     public static class CageSubsystemConstants {
-    public static final int cageMotor = 4;
+    public static final int cageMotor = 14;
     public static final String cageMotorCAN = RioCanBus;    
     }
 }

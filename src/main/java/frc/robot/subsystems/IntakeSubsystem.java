@@ -30,26 +30,29 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void coralIn(){
-    coralIntake.setControl(new DutyCycleOut(.3));//TBD
+    coralIntake.setControl(new DutyCycleOut(.1));//TBD
   }
 
   public void coralOut(){
-    coralIntake.setControl(new DutyCycleOut(-.3));//TBD
+    coralIntake.setControl(new DutyCycleOut(-.1));//TBD
   }
 
   public void topAlgaeStop(){
     topAlgaeIntake.setControl(new DutyCycleOut(0));
+    bottomAlgeaIntake.setControl(new DutyCycleOut(0));
     coralIntake.setControl(new DutyCycleOut(0));
   }
 
-  public void topAgaeIn(){
+  public void topAlgaeIn(){
     topAlgaeIntake.setControl(new DutyCycleOut(.6));//TBD
-    coralIntake.setControl(new DutyCycleOut(-.6));
+    bottomAlgeaIntake.setControl(new DutyCycleOut(.6));
+    coralIntake.setControl(new DutyCycleOut(-.3));
   }
 
   public void topAlgaeOut(){
     topAlgaeIntake.setControl(new DutyCycleOut(-.6));//TBD
-    coralIntake.setControl(new DutyCycleOut(.6));
+    coralIntake.setControl(new DutyCycleOut(.3));
+    bottomAlgeaIntake.setControl(new DutyCycleOut(-.6));
   }
 
   public void topIntakeAngleFeed(){

@@ -19,16 +19,16 @@ public class LiftSubsystem extends SubsystemBase{
      public int l1Position = 20;
      public int l2Position = 40;
      public int l3Position = 60;
-     public int l4Position = 80;
-     public int humanPlayerStationPosition = 100;
+     public int l4Position = 72; 
+     public int humanPlayerStationPosition = 50;
      public String lastButtonPressed = "N/A";
      //private double oneTop, oneBottom;
  public LiftSubsystem() {
     lift1 = new TalonFX(LiftSubsystemConstants.liftMotorID1);
-    //lift2 = new TalonFX(LiftSubsystemConstants.liftMotorID2,"*");
+    lift2 = new TalonFX(LiftSubsystemConstants.liftMotorID2);
     // oneTop = 0;
     // oneBottom = 0;
-    //lift2.setControl(new Follower (LiftSubsystemConstants.liftMotorID1, true));
+    lift2.setControl(new Follower (LiftSubsystemConstants.liftMotorID1, true));
     // lift2 fallows lift 1, not vice versa
     }
 

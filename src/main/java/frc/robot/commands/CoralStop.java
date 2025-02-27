@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 // This is where the CoralIn command is clarified
 
 /** An Intake command that uses an Intake subsystem. */
-public class CoralIn extends Command {
+public class CoralStop extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem intakeSubsystem;
 
@@ -19,7 +19,7 @@ public class CoralIn extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public CoralIn(IntakeSubsystem subsystem) {
+  public CoralStop(IntakeSubsystem subsystem) {
     intakeSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -32,7 +32,7 @@ public class CoralIn extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSubsystem.coralIn();
+    intakeSubsystem.coralStop();
   }
 
   // Called once the command ends or is interrupted.
