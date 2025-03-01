@@ -1,0 +1,91 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "blue3 to id22L"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralL4Place"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ElevatorDown"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "id22L to Human Player"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralRecieve"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "human player2 to id17R"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralL4Place"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ElevatorDown"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "id17R to human player"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralRecieve"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "human player2 to id17L"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralL4Place"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ElevatorDown"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

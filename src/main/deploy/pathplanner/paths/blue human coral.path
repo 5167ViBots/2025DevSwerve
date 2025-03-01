@@ -1,0 +1,196 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.5729452054733795,
+        "y": 7.435830479456516
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.336180149294063,
+        "y": 7.355566488947665
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.153809931506849,
+        "y": 5.392337328767123
+      },
+      "prevControl": {
+        "x": 4.928424657534246,
+        "y": 4.5659246575342465
+      },
+      "nextControl": {
+        "x": 5.2195892829548765,
+        "y": 5.633528284076556
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.3673373287671233,
+        "y": 6.98505993150685
+      },
+      "prevControl": {
+        "x": 2.0735445205479452,
+        "y": 7.03013698630137
+      },
+      "nextControl": {
+        "x": 1.0719667541706184,
+        "y": 6.966206490575159
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.6211900684931506,
+        "y": 5.1970034246575345
+      },
+      "prevControl": {
+        "x": 3.9918100932366865,
+        "y": 5.32054343290538
+      },
+      "nextControl": {
+        "x": 2.4491866438356165,
+        "y": 4.806335616438356
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.5175941780821918,
+        "y": 0.9146832191780823
+      },
+      "prevControl": {
+        "x": 2.2538527397260273,
+        "y": 1.110017123287671
+      },
+      "nextControl": {
+        "x": 0.8798928650974458,
+        "y": 0.7454971565494766
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.6211900684931506,
+        "y": 2.868022260273973
+      },
+      "prevControl": {
+        "x": 3.2305222602739723,
+        "y": 3.21361301369863
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": -121.42956561483844
+    },
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": -53.130102354156115
+    },
+    {
+      "waypointRelativePos": 3.0,
+      "rotationDegrees": -54.68878656036686
+    },
+    {
+      "waypointRelativePos": 4.0,
+      "rotationDegrees": 51.340191745909905
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Rest",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "CoralToReef",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "Rest",
+      "waypointRelativePos": 2.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "coral grab",
+      "waypointRelativePos": 2.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "CoralToReef",
+      "waypointRelativePos": 3.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "Rest",
+      "waypointRelativePos": 3.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "Rest",
+      "waypointRelativePos": 4.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "coral grab",
+      "waypointRelativePos": 4.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "Rest",
+      "waypointRelativePos": 5.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "CoralToReef",
+      "waypointRelativePos": 5.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 54.68878656036677
+  },
+  "reversed": false,
+  "folder": "RYKERS NO TOUCHY",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -179.35625428582463
+  },
+  "useDefaultConstraints": true
+}
