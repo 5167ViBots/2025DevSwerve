@@ -16,13 +16,15 @@ import frc.robot.generated.Constants.IntakeSubsystemConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  private TalonFX coralIntake, topAlgaeIntake, topIntakeAngle, bottomAlgeaIntake, bottomAlgeaIntakeSetter;
+  private TalonFX coralIntake, topAlgaeIntake, topIntakeAngle, bottomAlgeaIntake, bottomAlgeaIntakeSetter, topCoralAngle;
  
   public IntakeSubsystem() {
     coralIntake = new TalonFX(IntakeSubsystemConstants.coralIntake);
     topAlgaeIntake = new TalonFX(IntakeSubsystemConstants.topAlgaeIntake);
     bottomAlgeaIntake = new TalonFX (IntakeSubsystemConstants.bottomAlgeaIntake);
     bottomAlgeaIntakeSetter = new TalonFX(IntakeSubsystemConstants.bottomAlgeaIntakeSetter);
+    //topCoralAngle = new TalonFX(IntakeSubsystemConstants.coralAngle, IntakeSubsystemConstants.coralAngleCan);
+    topIntakeAngle = new TalonFX(IntakeSubsystemConstants.coralAngle, IntakeSubsystemConstants.coralAngleCan);
   }
 
   public void coralStop(){
@@ -34,32 +36,55 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void coralOut(){
-    coralIntake.setControl(new DutyCycleOut(-.1));//TBD
+    coralIntake.setControl(new DutyCycleOut(-.2));//TBD
   }
 
   public void topAlgaeStop(){
-    topAlgaeIntake.setControl(new DutyCycleOut(0));
+    double TopAlgaeTick = topAlgaeIntake.getPosition().getValueAsDouble();
+    topAlgaeIntake.setControl(new PositionDutyCycle(TopAlgaeTick));
+
+    double CoralIntakeTick = coralIntake.getPosition().getValueAsDouble();
+    coralIntake.setControl(new PositionDutyCycle(CoralIntakeTick));
     bottomAlgeaIntake.setControl(new DutyCycleOut(0));
-    coralIntake.setControl(new DutyCycleOut(0));
+    //coralIntake.setControl(new DutyCycleOut(0));
   }
 
   public void topAlgaeIn(){
-    topAlgaeIntake.setControl(new DutyCycleOut(.6));//TBD
-    bottomAlgeaIntake.setControl(new DutyCycleOut(.6));
+    topAlgaeIntake.setControl(new DutyCycleOut(-.2));//TBD
+    bottomAlgeaIntake.setControl(new DutyCycleOut(-1));
     coralIntake.setControl(new DutyCycleOut(-.3));
   }
 
+  boolean UpOrDownBottomAlgaeIntake = false;
+
+  public void SwitchAlgaeIntakePosition()
+  {
+    if (UpOrDownBottomAlgaeIntake)
+        bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(1.8));
+        else
+        bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(3.2));
+    UpOrDownBottomAlgaeIntake = !UpOrDownBottomAlgaeIntake;
+  }
+
   public void topAlgaeOut(){
-    topAlgaeIntake.setControl(new DutyCycleOut(-.6));//TBD
-    coralIntake.setControl(new DutyCycleOut(.3));
-    bottomAlgeaIntake.setControl(new DutyCycleOut(-.6));
+    topAlgaeIntake.setControl(new DutyCycleOut(1));//TBD
+    coralIntake.setControl(new DutyCycleOut(1));
+    bottomAlgeaIntake.setControl(new DutyCycleOut(.2));
   }
 
   public void topIntakeAngleFeed(){
-    topIntakeAngle.setControl(new DutyCycleOut(-.2));
+    topIntakeAngle.setControl(new PositionDutyCycle(74));
   }
 
   public void topIntakeAngleShoot(){
+    topIntakeAngle.setControl(new PositionDutyCycle(15.5));//TBD
+  }
+  
+  public void topIntakeAngleUp(){
+    topIntakeAngle.setControl(new DutyCycleOut(-.2));
+  }
+
+  public void topIntakeAngleDown(){
     topIntakeAngle.setControl(new DutyCycleOut(.2));//TBD
   }
 
@@ -84,11 +109,22 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void bottomAlgaeIntakeOut(){
-    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(.2));//TBD
+    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(4.1));//TBD
   }
 
   public void bottomAlgaeIntakeIn(){
-     bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(-.2));//TBD
+     bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(2));//TBD
+  }
+
+  public void SetTopAlgaeAngle(double tickposition)
+  {
+    topCoralAngle.setControl(new PositionDutyCycle(tickposition));
+  }
+
+  public void AdjustTopAlgageAngle(double tickpositiontoadd)
+  {
+    double newposition = topCoralAngle.getPosition().getValueAsDouble() + tickpositiontoadd;
+    topCoralAngle.setControl(new PositionDutyCycle(newposition));
   }
 
   /**

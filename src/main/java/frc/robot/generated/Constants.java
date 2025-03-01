@@ -16,6 +16,9 @@ public class Constants {
     public static final int coralIntake = 32;
     public static final String coralIntakeCan = RioCanBus;
 
+    public static final int coralAngle = 31;
+    public static final String coralAngleCan = RioCanBus;
+
     public static final int topAlgaeIntake = 33;
     public static final String topAlgaeIntakeCan = RioCanBus;
         

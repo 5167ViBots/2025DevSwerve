@@ -4,24 +4,23 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 //import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AlignLeft;
 import frc.robot.commands.AlignRight;
 import frc.robot.commands.BottomAlgaeIn;
@@ -29,23 +28,26 @@ import frc.robot.commands.BottomAlgaeIntakeIn;
 import frc.robot.commands.BottomAlgaeIntakeOut;
 import frc.robot.commands.BottomAlgaeIntakeSlightOut;
 import frc.robot.commands.BottomAlgaeOut;
-import frc.robot.commands.CageUp;
 import frc.robot.commands.CoralIn;
 import frc.robot.commands.CoralOut;
-import frc.robot.commands.CoralStop;
+import frc.robot.commands.DebugSetAngleDown;
+import frc.robot.commands.DebugSetAngleTo20;
+import frc.robot.commands.DebugSetAngleUp;
+import frc.robot.commands.DebugSwitchBottomAlgaeIntakePosition;
 import frc.robot.commands.HumanPlayerStation;
 import frc.robot.commands.L1;
 import frc.robot.commands.L2;
 import frc.robot.commands.L3;
 import frc.robot.commands.L4;
-import frc.robot.commands.LiftUp;
 import frc.robot.commands.LightCommand;
 import frc.robot.commands.ManualLiftDown;
 import frc.robot.commands.ManualLiftUp;
 import frc.robot.commands.TopAlgaeIn;
 import frc.robot.commands.TopAlgaeOut;
+import frc.robot.commands.TopIntakeAngleDown;
 import frc.robot.commands.TopIntakeAngleFeed;
 import frc.robot.commands.TopIntakeAngleShoot;
+import frc.robot.commands.TopIntakeAngleUp;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CageSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -126,10 +128,11 @@ CageSubsystem cage = new CageSubsystem();
 
     //Register Auton modes
     AutonChooser.addOption("Leave and Score","Leave and Score");
+    AutonChooser.addOption("auton","auton");
     
     
     //Set the default Auton
-    AutonChooser.setDefaultOption("Leave and Score","Leave and Score");
+    AutonChooser.setDefaultOption("auton","auton");
     
     //Add to shuffleboard
     tab.add(AutonChooser);
@@ -138,6 +141,8 @@ CageSubsystem cage = new CageSubsystem();
     public void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
+
+        //This is disabled because Mr. Klingerman had an oopsie. Laptops were flung, Robots were out of control, it was chaos.
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
@@ -148,19 +153,21 @@ CageSubsystem cage = new CageSubsystem();
         );
 
                 //bumpers are set to align the robot
-        joystick.R1().whileTrue(new AlignRight(drivetrain, lime));
-        joystick.L1().whileTrue(new AlignLeft(drivetrain, lime));
-        joystick.cross().whileTrue(drivetrain.applyRequest(() -> brake));
+        joystick.R1().whileTrue(new AlignRight(drivetrain, lime, joystick::getLeftY));
+        joystick.L1().whileTrue(new AlignLeft(drivetrain, lime, joystick::getLeftY));
+        //joystick.cross().whileTrue(drivetrain.applyRequest(() -> brake));
+        joystick.cross().whileTrue(new DebugSetAngleTo20(intake));
+        joystick.L3().whileTrue(new DebugSetAngleDown(intake));
+        joystick.R3().whileTrue(new DebugSetAngleUp(intake));
         joystick.circle().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
         ));
 
         joystick.pov(0).whileTrue(drivetrain.applyRequest(() ->
-        forwardStraight.withVelocityX(0.5).withVelocityY(0))
-    );
+            forwardStraight.withVelocityX(0.5).withVelocityY(0)));
+
     joystick.pov(180).whileTrue(drivetrain.applyRequest(() ->
-        forwardStraight.withVelocityX(-0.5).withVelocityY(0))
-    );
+        forwardStraight.withVelocityX(-0.5).withVelocityY(0)));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -185,26 +192,32 @@ CageSubsystem cage = new CageSubsystem();
         buttonBoard.button(3).whileTrue(new L3(lift));
         buttonBoard.button(4).whileTrue(new L2(lift));
         buttonBoard.button(5).whileTrue(new L1(lift));
-
-        buttonBoard.button(6).whileTrue(new BottomAlgaeIntakeIn(intake));
-        buttonBoard.button(7).whileTrue(new BottomAlgaeIntakeOut(intake));
+        IntakeSubsystem intake2 = new IntakeSubsystem();
+        buttonBoard.button(7).whileTrue(new BottomAlgaeIntakeIn(intake));
+        //joystick.L1().whileTrue(new TopAlgaeIn(intake2));
+        buttonBoard.button(6).whileTrue(new BottomAlgaeIntakeOut(intake));
+        //joystick.R1().whileTrue(new TopAlgaeOut(intake2));
+        joystick.square().whileTrue(new DebugSwitchBottomAlgaeIntakePosition(intake2));
 
         buttonBoard.button(8).whileTrue(new TopIntakeAngleShoot(intake));
         buttonBoard.button(9).whileTrue(new TopIntakeAngleFeed(intake));
+        buttonBoardJr.button(2).whileTrue(new TopIntakeAngleUp(intake));
+        buttonBoardJr.button(3).whileTrue(new TopIntakeAngleDown(intake));
 
         buttonBoard.button(10).whileTrue(new ManualLiftUp(lift));
         buttonBoard.button(11).whileTrue(new ManualLiftDown(lift));
-        buttonBoard.button(12).whileTrue(new CageUp(cage));
-        buttonBoardJr.button(6).whileTrue(new CoralIn(intake));
-        buttonBoardJr.button(7).whileTrue(new CoralOut(intake));
+       // buttonBoard.button(12).whileTrue(new CageUp(cage));
+        buttonBoardJr.button(6).whileTrue(new CoralIn(intake2));
+        buttonBoardJr.button(7).whileTrue(new CoralOut(intake2));
         buttonBoardJr.button(4).whileTrue(new TopAlgaeIn(intake));
         buttonBoardJr.button(5).whileTrue(new TopAlgaeOut(intake));
     }
 
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
-        return new Command() {
+        // return new Command() {
             
-        };
+        // };
+         return new PathPlannerAuto(AutonChooser.getSelected());
     }
 }

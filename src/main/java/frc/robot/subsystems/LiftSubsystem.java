@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 //import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 //import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,16 +17,18 @@ import frc.robot.generated.Constants.LiftSubsystemConstants;
 
 public class LiftSubsystem extends SubsystemBase{
      private TalonFX lift1, lift2;
-     public int l1Position = 20;
-     public int l2Position = 40;
-     public int l3Position = 60;
-     public int l4Position = 72; 
+     public int l1Position = 5;
+     public int l2Position = 15;
+     public int l3Position = 25;
+     public int l4Position = 62; 
      public int humanPlayerStationPosition = 50;
      public String lastButtonPressed = "N/A";
      //private double oneTop, oneBottom;
  public LiftSubsystem() {
     lift1 = new TalonFX(LiftSubsystemConstants.liftMotorID1);
     lift2 = new TalonFX(LiftSubsystemConstants.liftMotorID2);
+    lift1.setNeutralMode(NeutralModeValue.Brake);
+    lift2.setNeutralMode(NeutralModeValue.Brake);
     // oneTop = 0;
     // oneBottom = 0;
     lift2.setControl(new Follower (LiftSubsystemConstants.liftMotorID1, true));

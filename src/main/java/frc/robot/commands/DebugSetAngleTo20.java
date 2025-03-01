@@ -4,25 +4,23 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.LiftSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
-// This is where the L3 command is clarified
+// This is where the AlgaeIn command is clarified 
 
 /** An example command that uses an example subsystem. */
-public class L3 extends Command {
+public class DebugSetAngleTo20 extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final LiftSubsystem liftsubsystem;
+  private final IntakeSubsystem intakesubsystem;
 
   /**
-   * Creates a new ExampleCommand.
+   * Creates a new AlgaeIn.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public L3(LiftSubsystem subsystem) {
-    liftsubsystem = subsystem;
-    System.out.println("LiftCommandSubsystem");
-
+  public DebugSetAngleTo20(IntakeSubsystem subsystem) {
+    intakesubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -33,20 +31,20 @@ public class L3 extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    liftsubsystem.L3();
-    
+  public void execute() {    
+    intakesubsystem.SetTopAlgaeAngle(15.5); //Changed to temporarily meet our new L2 and L3 Angle
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //liftsubsystem.liftStop();
+    intakesubsystem.SetTopAlgaeAngle(15.5); //Changed to temporarily meet our new L2 and L3 Angle
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !liftsubsystem.IsUpSafe();
+    return false;
   }
 }

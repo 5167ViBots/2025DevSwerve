@@ -280,7 +280,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
     
  private final SwerveRequest.RobotCentric Botdrive = new SwerveRequest.RobotCentric()
- .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.05); // Add a 10% deadband
+ /*.withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.05)*/; // Add a 10% deadband
 
     public void RobotDrive(double UpDown, double LeftRight, double Rotate) {
         this.setControl(Botdrive.withVelocityX(-UpDown * MaxSpeed) // Drive forward with
