@@ -10,6 +10,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
 //import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -125,7 +126,8 @@ CageSubsystem cage = new CageSubsystem();
     
     //Create Shuffleboard Tab
     var tab = Shuffleboard.getTab("Auton");
-
+    
+    var autochooser = AutoBuilder.buildAutoChooser("auton");
     //Register Auton modes
     AutonChooser.addOption("Leave and Score","Leave and Score");
     AutonChooser.addOption("auton","auton");
@@ -135,7 +137,7 @@ CageSubsystem cage = new CageSubsystem();
     AutonChooser.setDefaultOption("auton","auton");
     
     //Add to shuffleboard
-    tab.add(AutonChooser);
+    tab.add(autochooser);
   }
 
     public void configureBindings() {
