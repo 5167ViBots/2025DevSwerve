@@ -18,6 +18,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
@@ -35,6 +36,7 @@ import frc.robot.commands.DebugSetAngleDown;
 import frc.robot.commands.DebugSetAngleTo20;
 import frc.robot.commands.DebugSetAngleUp;
 import frc.robot.commands.DebugSwitchBottomAlgaeIntakePosition;
+import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.HumanPlayerStation;
 import frc.robot.commands.Init;
 import frc.robot.commands.L1;
@@ -44,6 +46,7 @@ import frc.robot.commands.L4;
 import frc.robot.commands.LightCommand;
 import frc.robot.commands.ManualLiftDown;
 import frc.robot.commands.ManualLiftUp;
+import frc.robot.commands.SwitchDriveMode;
 import frc.robot.commands.TopAlgaeIn;
 import frc.robot.commands.TopAlgaeOut;
 import frc.robot.commands.TopIntakeAngleDown;
@@ -74,7 +77,7 @@ IntakeSubsystem intake = new IntakeSubsystem();
     //         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
     //         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
-            private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
+            private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
@@ -97,6 +100,7 @@ IntakeSubsystem intake = new IntakeSubsystem();
         registerPathPlannerCommands();
         configureBindings();
         registerAutons();
+        drivetrain.setOperatorPerspectiveForward(new Rotation2d(180));
       }
     
 
@@ -145,15 +149,10 @@ IntakeSubsystem intake = new IntakeSubsystem();
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
 
+        DefaultDriveCommand x = new DefaultDriveCommand(drivetrain, joystick::getLeftY, joystick::getLeftX, joystick::getRightX);
         //This is disabled because Mr. Klingerman had an oopsie. Laptops were flung, Robots were out of control, it was chaos.
-        drivetrain.setDefaultCommand(
-            // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-            )
-        );
+        drivetrain.setDefaultCommand(x);
+ 
 
                 //bumpers are set to align the robot
         joystick.R1().whileTrue(new AlignRight(drivetrain, lime, joystick::getLeftY));
@@ -189,6 +188,9 @@ IntakeSubsystem intake = new IntakeSubsystem();
         //assings pov right and left to a color when pushed
         joystick.povRight().whileTrue(new LightCommand(lights, 0.0, 225.0, 0.0));
         joystick.povLeft().whileTrue(new LightCommand(lights, 225.0, 0.0, 225.0));
+        
+        //Will be used to switch from field oriented drive to Robot oriented drive
+        joystick.PS().whileTrue(new SwitchDriveMode(drivetrain));
 
         buttonBoard.button(1).whileTrue(new HumanPlayerStation(lift));
         buttonBoard.button(2).whileTrue(new L4(lift));
