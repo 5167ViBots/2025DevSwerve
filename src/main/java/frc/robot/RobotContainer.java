@@ -36,6 +36,7 @@ import frc.robot.commands.DebugSetAngleTo20;
 import frc.robot.commands.DebugSetAngleUp;
 import frc.robot.commands.DebugSwitchBottomAlgaeIntakePosition;
 import frc.robot.commands.HumanPlayerStation;
+import frc.robot.commands.Init;
 import frc.robot.commands.L1;
 import frc.robot.commands.L2;
 import frc.robot.commands.L3;
@@ -50,7 +51,6 @@ import frc.robot.commands.TopIntakeAngleFeed;
 import frc.robot.commands.TopIntakeAngleShoot;
 import frc.robot.commands.TopIntakeAngleUp;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CageSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
@@ -65,7 +65,6 @@ SwitchSubsystem switcher = new SwitchSubsystem();
 LimelightSubsystem lime = new LimelightSubsystem();
 LiftSubsystem lift = new LiftSubsystem();
 IntakeSubsystem intake = new IntakeSubsystem();
-CageSubsystem cage = new CageSubsystem();
     
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -119,25 +118,27 @@ CageSubsystem cage = new CageSubsystem();
          NamedCommands.registerCommand("BottomAlgeaIntakeSlightOut", new BottomAlgaeIntakeSlightOut(intake));
          NamedCommands.registerCommand("BottomAlgeaIn", new BottomAlgaeIn(intake));
          NamedCommands.registerCommand("BottomAlgeaOut", new BottomAlgaeOut(intake));
+         NamedCommands.registerCommand("Init", new Init(intake)); 
         }
     
-        public SendableChooser<String> AutonChooser = new SendableChooser<String>();
+        public SendableChooser<Command> AutonChooser = new SendableChooser<Command>();
+        //SendableChooser<Command> autochooser; 
     private void registerAutons() {
     
     //Create Shuffleboard Tab
     var tab = Shuffleboard.getTab("Auton");
     
-    var autochooser = AutoBuilder.buildAutoChooser("auton");
+    AutonChooser = AutoBuilder.buildAutoChooser("auton");
     //Register Auton modes
-    AutonChooser.addOption("Leave and Score","Leave and Score");
-    AutonChooser.addOption("auton","auton");
+    // AutonChooser.addOption("Leave and Score","Leave and Score");
+    // AutonChooser.addOption("auton","auton");
     
     
-    //Set the default Auton
-    AutonChooser.setDefaultOption("auton","auton");
+    // //Set the default Auton
+    // AutonChooser.setDefaultOption("auton","auton");
     
     //Add to shuffleboard
-    tab.add(autochooser);
+    tab.add(AutonChooser);
   }
 
     public void configureBindings() {
@@ -208,7 +209,7 @@ CageSubsystem cage = new CageSubsystem();
 
         buttonBoard.button(10).whileTrue(new ManualLiftUp(lift));
         buttonBoard.button(11).whileTrue(new ManualLiftDown(lift));
-       // buttonBoard.button(12).whileTrue(new CageUp(cage));
+        //buttonBoard.button(12).whileTrue(new Init(intake));
         buttonBoardJr.button(6).whileTrue(new CoralIn(intake2));
         buttonBoardJr.button(7).whileTrue(new CoralOut(intake2));
         buttonBoardJr.button(4).whileTrue(new TopAlgaeIn(intake));
