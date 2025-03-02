@@ -31,6 +31,7 @@ import frc.robot.commands.BottomAlgaeIntakeSlightOut;
 import frc.robot.commands.BottomAlgaeOut;
 import frc.robot.commands.CoralIn;
 import frc.robot.commands.CoralOut;
+import frc.robot.commands.CoralStop;
 import frc.robot.commands.DebugSetAngleDown;
 import frc.robot.commands.DebugSetAngleTo20;
 import frc.robot.commands.DebugSetAngleUp;
@@ -74,7 +75,7 @@ IntakeSubsystem intake = new IntakeSubsystem();
     //         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
     //         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
-            private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
+            private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
@@ -97,6 +98,7 @@ IntakeSubsystem intake = new IntakeSubsystem();
         registerPathPlannerCommands();
         configureBindings();
         registerAutons();
+        drivetrain.setOperatorPerspectiveForward(new Rotation2d(180));
       }
     
 
@@ -108,6 +110,7 @@ IntakeSubsystem intake = new IntakeSubsystem();
          NamedCommands.registerCommand("L4", new L4(lift));
          NamedCommands.registerCommand("HumanPlayerStation", new HumanPlayerStation(lift));
          NamedCommands.registerCommand("CoralIn", new CoralIn(intake));
+         NamedCommands.registerCommand("CoralStop", new CoralStop(intake));
          NamedCommands.registerCommand("CoralOut", new CoralOut(intake));
          NamedCommands.registerCommand("TopAglaeIn", new TopAlgaeIn(intake));
          NamedCommands.registerCommand("TopAglaeOut", new TopAlgaeOut(intake));
@@ -160,8 +163,8 @@ IntakeSubsystem intake = new IntakeSubsystem();
         joystick.L1().whileTrue(new AlignLeft(drivetrain, lime, joystick::getLeftY));
         //joystick.cross().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.cross().whileTrue(new DebugSetAngleTo20(intake));
-        joystick.L3().whileTrue(new DebugSetAngleDown(intake));
-        joystick.R3().whileTrue(new DebugSetAngleUp(intake));
+        //joystick.L3().whileTrue(new DebugSetAngleDown(intake));
+        //joystick.R3().whileTrue(new DebugSetAngleUp(intake));
         joystick.circle().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
         ));

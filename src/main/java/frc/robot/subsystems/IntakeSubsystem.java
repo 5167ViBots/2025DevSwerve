@@ -51,7 +51,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void topAlgaeIn(){
     topAlgaeIntake.setControl(new DutyCycleOut(-.2));//TBD
-    bottomAlgeaIntake.setControl(new DutyCycleOut(-1));
+    bottomAlgeaIntake.setControl(new DutyCycleOut(-.5));
     coralIntake.setControl(new DutyCycleOut(-.3));
   }
 
@@ -67,8 +67,8 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void topAlgaeOut(){
-    topAlgaeIntake.setControl(new DutyCycleOut(1));//TBD
-    coralIntake.setControl(new DutyCycleOut(1));
+    topAlgaeIntake.setControl(new DutyCycleOut(.7));
+    coralIntake.setControl(new DutyCycleOut(.7)); 
     bottomAlgeaIntake.setControl(new DutyCycleOut(.2));
   }
 
@@ -109,7 +109,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void bottomAlgaeIntakeOut(){
-    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(4.1));//TBD
+    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(4.5));//TBD
   }
 
   public void bottomAlgaeIntakeIn(){
