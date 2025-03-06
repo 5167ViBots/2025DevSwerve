@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Init"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "blue3 to id22L"
@@ -13,13 +19,19 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralL4Place"
+            "name": "L3"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ElevatorDown"
+            "name": "CoralOut"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1"
           }
         },
         {
@@ -31,7 +43,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralRecieve"
+            "name": "CoralIn"
           }
         },
         {
@@ -43,13 +55,19 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralL4Place"
+            "name": "L3"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ElevatorDown"
+            "name": "CoralOut"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1"
           }
         },
         {
@@ -61,7 +79,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralRecieve"
+            "name": "CoralIn"
           }
         },
         {
@@ -73,13 +91,19 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralL4Place"
+            "name": "L3"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ElevatorDown"
+            "name": "CoralOut"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1"
           }
         }
       ]

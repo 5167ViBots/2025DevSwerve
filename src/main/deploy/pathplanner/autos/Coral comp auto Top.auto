@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Init"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "blue1 to id20"
@@ -13,13 +19,31 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralL4Place"
+            "name": "L3"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.75
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ElevatorDown"
+            "name": "CoralOut"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.6
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1"
           }
         },
         {
@@ -31,7 +55,13 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralRecieve"
+            "name": "CoralIn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
           }
         },
         {
@@ -43,13 +73,31 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralL4Place"
+            "name": "L3"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.75
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ElevatorDown"
+            "name": "CoralOut"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.6
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1"
           }
         },
         {
@@ -61,7 +109,13 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralRecieve"
+            "name": "CoralIn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
           }
         },
         {
@@ -73,13 +127,31 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralL4Place"
+            "name": "L3"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.75
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ElevatorDown"
+            "name": "CoralOut"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.6
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1"
           }
         }
       ]
