@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 //import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -16,6 +18,17 @@ import frc.robot.generated.Constants.LiftSubsystemConstants;
 // This is where all the commands related to the Lift are created
 
 public class LiftSubsystem extends SubsystemBase{
+// cruise 40
+// accel 25 
+
+// kP 3.25
+// kl 0
+// kD .35
+// kS .1
+// kV 0
+// kA 0
+// kG .4 
+
      private TalonFX lift1, lift2;
      public int l1Position = 5;
      public int l2Position = 15;
@@ -33,6 +46,35 @@ public class LiftSubsystem extends SubsystemBase{
     // oneBottom = 0;
     lift2.setControl(new Follower (LiftSubsystemConstants.liftMotorID1, true));
     // lift2 fallows lift 1, not vice versa
+
+
+    var talonFXConfigs = new TalonFXConfiguration();
+    var slot0Configs = talonFXConfigs.Slot0;
+    slot0Configs.kP = 3.25;
+    slot0Configs.kI = 0;
+    slot0Configs.kD = .35;
+    slot0Configs.kS = .1;
+    slot0Configs.kV = 0;
+    slot0Configs.kA = 0;
+    slot0Configs.kG = .4;
+
+    var motionMagicConfigs = talonFXConfigs.MotionMagic;
+    motionMagicConfigs.MotionMagicCruiseVelocity = 40;
+    motionMagicConfigs.MotionMagicAcceleration = 25;
+    motionMagicConfigs.MotionMagicJerk = 0; //Dane
+
+    lift1.getConfigurator().apply(talonFXConfigs);
+
+    // cruise 40
+// accel 25 
+
+// kP 3.25
+// kl 0
+// kD .35
+// kS .1
+// kV 0
+// kA 0
+// kG .4 
     }
 
     
@@ -56,35 +98,35 @@ public class LiftSubsystem extends SubsystemBase{
   }
 
   public void L1(){
-    lift1.setControl(new PositionDutyCycle(l1Position));
+    lift1.setControl(new MotionMagicVoltage(l1Position));
     lastButtonPressed = "L1";
     System.out.println(lastButtonPressed);
     System.out.println(l1Position);
   }
 
   public void L2(){
-    lift1.setControl(new PositionDutyCycle(l2Position)); 
+    lift1.setControl(new MotionMagicVoltage(l2Position)); 
     lastButtonPressed = "L2";
     System.out.println(lastButtonPressed);
     System.out.println(l2Position);
   }
 
   public void L3(){
-    lift1.setControl(new PositionDutyCycle(l3Position));
+    lift1.setControl(new MotionMagicVoltage(l3Position));
     lastButtonPressed = "L3";
     System.out.println(lastButtonPressed);
     System.out.println(l3Position);
   }
 
   public void L4(){
-    lift1.setControl(new PositionDutyCycle(l4Position));
+    lift1.setControl(new MotionMagicVoltage(l4Position));
     lastButtonPressed = "L4";
     System.out.println(lastButtonPressed);
     System.out.println(l4Position);
   }
 
   public void HumanPlayerStation(){
-    lift1.setControl(new PositionDutyCycle(humanPlayerStationPosition));
+    lift1.setControl(new MotionMagicVoltage(humanPlayerStationPosition));
     lastButtonPressed = "HumanPlayerStation";
     System.out.println(lastButtonPressed);
     System.out.println(humanPlayerStationPosition);
@@ -93,37 +135,37 @@ public class LiftSubsystem extends SubsystemBase{
   public void LastPositionUp(){
     if(lastButtonPressed == "L1"){
       l1Position = l1Position + 1;
-      lift1.setControl(new PositionDutyCycle(l1Position));
+      lift1.setControl(new MotionMagicVoltage(l1Position));
     } else if (lastButtonPressed == "L2"){
       l2Position = l2Position + 1;
-      lift1.setControl(new PositionDutyCycle(l2Position)); 
+      lift1.setControl(new MotionMagicVoltage(l2Position)); 
     }else if (lastButtonPressed == "L3"){
       l3Position = l3Position + 1;
-      lift1.setControl(new PositionDutyCycle(l3Position));
+      lift1.setControl(new MotionMagicVoltage(l3Position));
     }else if (lastButtonPressed == "L4"){
       l4Position = l4Position + 1;
-      lift1.setControl(new PositionDutyCycle(l4Position));
+      lift1.setControl(new MotionMagicVoltage(l4Position));
     }else if (lastButtonPressed == "HumanPlayerStation"){
       humanPlayerStationPosition = humanPlayerStationPosition + 1;
-      lift1.setControl(new PositionDutyCycle(humanPlayerStationPosition));
+      lift1.setControl(new MotionMagicVoltage(humanPlayerStationPosition));
     }
   }
 
   public void LastPositionDown(){
     if(lastButtonPressed == "L1"){
       l1Position = l1Position - 1;
-      lift1.setControl(new PositionDutyCycle(l1Position));
+      lift1.setControl(new MotionMagicVoltage(l1Position));
     } else if (lastButtonPressed == "L2"){
       l2Position = l2Position - 1;
-      lift1.setControl(new PositionDutyCycle(l2Position)); 
+      lift1.setControl(new MotionMagicVoltage(l2Position)); 
     }else if (lastButtonPressed == "L3"){
       l3Position = l3Position - 1;
-      lift1.setControl(new PositionDutyCycle(l3Position));
+      lift1.setControl(new MotionMagicVoltage(l3Position));
     }else if (lastButtonPressed == "L4"){
       l4Position = l4Position - 1;
     }else if (lastButtonPressed == "HumanPlayerStation"){
       humanPlayerStationPosition = humanPlayerStationPosition - 1;
-      lift1.setControl(new PositionDutyCycle(humanPlayerStationPosition));
+      lift1.setControl(new MotionMagicVoltage(humanPlayerStationPosition));
     }
   }
 
