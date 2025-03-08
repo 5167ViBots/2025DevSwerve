@@ -35,6 +35,14 @@ public void setOrange()
         candle.setLEDs(toInt(InColor.red), toInt(InColor.green), toInt(InColor.blue));
     }
 
+    public void AprilTagSeenStatus(boolean IsAprilTagSeen)
+    {
+        if (IsAprilTagSeen)
+        setColor(Color.kGreen);
+        else
+        setColor(Color.kRed);
+    }
+
 
 
 }
