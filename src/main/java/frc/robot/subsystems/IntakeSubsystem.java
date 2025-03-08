@@ -5,9 +5,12 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.MusicTone;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.units.FrequencyUnit;
+import edu.wpi.first.units.measure.Frequency;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.generated.Constants.IntakeSubsystemConstants;
@@ -76,6 +79,9 @@ public class IntakeSubsystem extends SubsystemBase {
     topIntakeAngle.setControl(new PositionDutyCycle(74));
   }
 
+  public void topIntakeAngleBarge(){
+    topIntakeAngle.setControl(new PositionDutyCycle(68)); //IDK :)
+  }
   public void topIntakeAngleShoot(){
     topIntakeAngle.setControl(new PositionDutyCycle(15.5));//TBD
   }
@@ -125,6 +131,10 @@ public class IntakeSubsystem extends SubsystemBase {
   {
     double newposition = topCoralAngle.getPosition().getValueAsDouble() + tickpositiontoadd;
     topCoralAngle.setControl(new PositionDutyCycle(newposition));
+  }
+
+  public void chirpChirp(){
+    bottomAlgeaIntake.setControl(new MusicTone(233.08)); 
   }
 
   /**
