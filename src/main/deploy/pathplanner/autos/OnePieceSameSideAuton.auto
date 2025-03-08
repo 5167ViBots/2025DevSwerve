@@ -17,6 +17,18 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "BottomAlgeaIntakeIn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "SameSideToReef"
@@ -49,7 +61,7 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralOut"
+            "name": "CoralOutStop"
           }
         },
         {

@@ -109,7 +109,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void bottomAlgaeIntakeOut(){
-    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(5.2));//previous 4.5
+    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(5.5));//previous 4.5
   }
 
   public void bottomAlgaeIntakeIn(){
