@@ -40,7 +40,7 @@ public class Robot extends LoggedRobot {
     if (isReal()) {
         Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
         Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-        new PowerDistribution(0, ModuleType.kRev); // Enables power distribution logging
+        //new PowerDistribution(0, ModuleType.kRev); // Enables power distribution logging
     } else {
         setUseTiming(false); // Run as fast as possible
         String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
@@ -61,7 +61,7 @@ public class Robot extends LoggedRobot {
     DriverStation.startDataLog(DataLogManager.getLog());
   }
 
-  String LimeLightName = "limelight";
+  String LimeLightName = "limelight-righty";
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
@@ -89,7 +89,7 @@ public class Robot extends LoggedRobot {
     //If robot is disabled and we're potentially positioning the bot, set the limelight color accordingly
     if (!DriverStation.isEnabled())
     {
-      m_robotContainer.lights.AprilTagSeenStatus(LimelightHelpers.getTargetCount(LimeLightName) > 0);
+      //m_robotContainer.lights.AprilTagSeenStatus(LimelightHelpers.getTargetCount(LimeLightName) > 0);
     }
   }
 

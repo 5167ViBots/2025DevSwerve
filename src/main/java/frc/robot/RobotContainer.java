@@ -206,9 +206,9 @@ IntakeSubsystem intake = new IntakeSubsystem();
         buttonBoard.button(4).whileTrue(new L2(lift));
         buttonBoard.button(5).whileTrue(Commands.parallel(new L1(lift), new TopIntakeAngleShoot(intake)));
         IntakeSubsystem intake2 = new IntakeSubsystem();
-        buttonBoard.button(7).whileTrue(new BottomAlgaeIntakeIn(intake));
+        buttonBoard.button(6).whileTrue(new BottomAlgaeIntakeIn(intake));
         //joystick.L1().whileTrue(new TopAlgaeIn(intake2));
-        buttonBoard.button(6).whileTrue(new BottomAlgaeIntakeOut(intake));
+        buttonBoard.button(7).whileTrue(new BottomAlgaeIntakeOut(intake));
         //joystick.R1().whileTrue(new TopAlgaeOut(intake2));
         joystick.square().whileTrue(new DebugSwitchBottomAlgaeIntakePosition(intake2));
 
@@ -216,7 +216,6 @@ IntakeSubsystem intake = new IntakeSubsystem();
         buttonBoard.button(9).whileTrue(new TopIntakeAngleFeed(intake));
         buttonBoardJr.button(2).whileTrue(new TopIntakeAngleUp(intake));
         buttonBoardJr.button(3).whileTrue(new TopIntakeAngleDown(intake));
-        buttonBoard.button(12).whileTrue(new TopIntakeAngleBarge(intake));
 
         buttonBoard.button(10).whileTrue(new ManualLiftUp(lift));
         buttonBoard.button(11).whileTrue(new ManualLiftDown(lift));
@@ -225,6 +224,7 @@ IntakeSubsystem intake = new IntakeSubsystem();
         buttonBoardJr.button(7).whileTrue(new CoralOut(intake2));
         buttonBoardJr.button(4).whileTrue(new TopAlgaeIn(intake));
         buttonBoardJr.button(5).whileTrue(new TopAlgaeOut(intake));
+        buttonBoardJr.button(1).whileTrue(new Init(intake));
     }
 
     public Command getAutonomousCommand() {

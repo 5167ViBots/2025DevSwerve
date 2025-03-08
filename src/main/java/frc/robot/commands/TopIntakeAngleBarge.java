@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 // This is where the AlgaeIn command is clarified 
 
 /** An example command that uses an example subsystem. */
-public class TopIntakeAngleFeed extends Command {
+public class TopIntakeAngleBarge extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final IntakeSubsystem intakesubsystem;
 
@@ -19,7 +19,7 @@ public class TopIntakeAngleFeed extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public TopIntakeAngleFeed(IntakeSubsystem subsystem) {
+  public TopIntakeAngleBarge(IntakeSubsystem subsystem) {
     intakesubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -32,7 +32,7 @@ public class TopIntakeAngleFeed extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakesubsystem.topIntakeAngleFeed();
+    intakesubsystem.topIntakeAngleBarge();
   }
 
   // Called once the command ends or is interrupted.

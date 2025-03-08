@@ -35,6 +35,7 @@ public class L4 extends Command {
   @Override
   public void execute() {
     liftsubsystem.L4();
+    //liftsubsystem.tromboneNoise();
   }
 
   // Called once the command ends or is interrupted.

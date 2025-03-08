@@ -11,8 +11,12 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.units.FrequencyUnit;
 import edu.wpi.first.units.measure.Frequency;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Util.SetPoint;
 import frc.robot.generated.Constants.IntakeSubsystemConstants;
 
 // This is where all the commands related to the intakes are created
@@ -28,6 +32,10 @@ public class IntakeSubsystem extends SubsystemBase {
     bottomAlgeaIntakeSetter = new TalonFX(IntakeSubsystemConstants.bottomAlgeaIntakeSetter);
     //topCoralAngle = new TalonFX(IntakeSubsystemConstants.coralAngle, IntakeSubsystemConstants.coralAngleCan);
     topIntakeAngle = new TalonFX(IntakeSubsystemConstants.coralAngle, IntakeSubsystemConstants.coralAngleCan);
+    //Shuffleboard.getTab("intake").addDouble("human setpoint", FeedIntakeSetpoint::get);
+
+    //SmartDashboard.putData("Raise HumanIntakeSetpoint", FeedIntakeSetpoint.GetRaiseCommand());
+    //SmartDashboard.putData("Lower HumanIntakeSetpoint", FeedIntakeSetpoint.GetLowerCommand());
   }
 
   public void coralStop(){
@@ -35,7 +43,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void coralIn(){
-    coralIntake.setControl(new DutyCycleOut(.1));//TBD
+    coralIntake.setControl(new DutyCycleOut(.3));//TBD
   }
 
   public void coralOut(){
@@ -75,8 +83,9 @@ public class IntakeSubsystem extends SubsystemBase {
     bottomAlgeaIntake.setControl(new DutyCycleOut(.2));
   }
 
+  public SetPoint FeedIntakeSetpoint = new SetPoint(75);
   public void topIntakeAngleFeed(){
-    topIntakeAngle.setControl(new PositionDutyCycle(74));
+    topIntakeAngle.setControl(new PositionDutyCycle(FeedIntakeSetpoint.get())); //prev 74
   }
 
   public void topIntakeAngleBarge(){
@@ -115,7 +124,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void bottomAlgaeIntakeOut(){
-    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(5.5));//previous 4.5
+    bottomAlgeaIntakeSetter.setControl(new PositionDutyCycle(5.2));//previous 4.5
   }
 
   public void bottomAlgaeIntakeIn(){
@@ -164,6 +173,8 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // Shuffleboard.getTab("intake").add("Raise", FeedIntakeSetpoint.GetRaiseCommand());
+    // Shuffleboard.getTab("intake").add("lower", FeedIntakeSetpoint.GetLowerCommand());
   }
 
   @Override

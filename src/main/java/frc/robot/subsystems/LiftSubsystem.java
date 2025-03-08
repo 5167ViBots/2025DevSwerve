@@ -4,15 +4,19 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.MusicTone;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 //import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.units.FrequencyUnit;
+import edu.wpi.first.units.measure.Frequency;
 //import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.generated.Constants.IntakeSubsystemConstants;
 import frc.robot.generated.Constants.LiftSubsystemConstants;
 
 // This is where all the commands related to the Lift are created
@@ -29,7 +33,7 @@ public class LiftSubsystem extends SubsystemBase{
 // kA 0
 // kG .4 
 
-     private TalonFX lift1, lift2;
+     private TalonFX lift1, lift2, bottomAlgeaIntake;
      public int l1Position = 5;
      public int l2Position = 15;
      public int l3Position = 25;
@@ -42,10 +46,13 @@ public class LiftSubsystem extends SubsystemBase{
     lift2 = new TalonFX(LiftSubsystemConstants.liftMotorID2);
     lift1.setNeutralMode(NeutralModeValue.Brake);
     lift2.setNeutralMode(NeutralModeValue.Brake);
+    bottomAlgeaIntake = new TalonFX (IntakeSubsystemConstants.bottomAlgeaIntake);
+    
     // oneTop = 0;
     // oneBottom = 0;
     lift2.setControl(new Follower (LiftSubsystemConstants.liftMotorID1, true));
     // lift2 fallows lift 1, not vice versa
+
 
 
     var talonFXConfigs = new TalonFXConfiguration();
@@ -59,9 +66,9 @@ public class LiftSubsystem extends SubsystemBase{
     slot0Configs.kG = .4;
 
     var motionMagicConfigs = talonFXConfigs.MotionMagic;
-    motionMagicConfigs.MotionMagicCruiseVelocity = 40;
-    motionMagicConfigs.MotionMagicAcceleration = 25;
-    motionMagicConfigs.MotionMagicJerk = 0; //Dane
+    motionMagicConfigs.MotionMagicCruiseVelocity = 50;
+    motionMagicConfigs.MotionMagicAcceleration = 45;
+    motionMagicConfigs.MotionMagicJerk = 0; //Dane (wrong)
 
     lift1.getConfigurator().apply(talonFXConfigs);
 
@@ -167,6 +174,10 @@ public class LiftSubsystem extends SubsystemBase{
       humanPlayerStationPosition = humanPlayerStationPosition - 1;
       lift1.setControl(new MotionMagicVoltage(humanPlayerStationPosition));
     }
+  }
+
+  public void tromboneNoise(){
+    bottomAlgeaIntake.setControl(new MusicTone(lift1.getPosition().getValueAsDouble()/1.667));
   }
 
   /**

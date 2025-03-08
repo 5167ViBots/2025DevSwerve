@@ -53,7 +53,7 @@ public class AlignRight extends Command{
         if (Math.abs(SetDriveValue) < .1)
             SetDriveValue = 0;
     //drive.RobotDrive(-kPy*rightYErrorRate, kPx*rightXErrorRate, 0.0);
-    drive.RobotDrive(SetDriveValue, LRController.calculate(rightYErrorRate), -yawController.calculate(yaw));
+    drive.RobotDrive(SetDriveValue, -LRController.calculate(rightXErrorRate), -yawController.calculate(yaw));
     }
     else
     {
