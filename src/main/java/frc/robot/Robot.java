@@ -7,6 +7,8 @@ package frc.robot;
 import com.ctre.phoenix6.Utils;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -23,8 +25,13 @@ public class Robot extends TimedRobot {
     System.out.println("(o o)");
     System.out.println("/___\\");
     System.out.println("bob could really go for a burger right now");
+    // Starts recording to data log
+    DataLogManager.start();
+    // Record both DS control and joystick data
+    DriverStation.startDataLog(DataLogManager.getLog());
   }
 
+  String LimeLightName = "limelight";
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
@@ -42,11 +49,17 @@ public class Robot extends TimedRobot {
       double headingDeg = driveState.Pose.getRotation().getDegrees();
       double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
 
-      LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
-      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+      LimelightHelpers.SetRobotOrientation(LimeLightName, headingDeg, 0, 0, 0, 0, 0);
+      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(LimeLightName);
       if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0) {
         m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, Utils.fpgaToCurrentTime(llMeasurement.timestampSeconds));
       }
+    }
+
+    //If robot is disabled and we're potentially positioning the bot, set the limelight color accordingly
+    if (!DriverStation.isEnabled())
+    {
+      m_robotContainer.lights.AprilTagSeenStatus(LimelightHelpers.getTargetCount(LimeLightName) > 0);
     }
   }
 
