@@ -36,7 +36,7 @@ public class LiftSubsystem extends SubsystemBase{
      private TalonFX lift1, lift2, bottomAlgeaIntake;
      public int l1Position = 5;
      public int l2Position = 15;
-     public int l3Position = 25;
+     public int l3Position = 24;
      public int l4Position = 62; 
      public int humanPlayerStationPosition = 50;
      public String lastButtonPressed = "N/A";

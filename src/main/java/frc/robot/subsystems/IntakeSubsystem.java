@@ -47,7 +47,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void coralOut(){
-    coralIntake.setControl(new DutyCycleOut(-.2));//TBD
+    coralIntake.setControl(new DutyCycleOut(-.5));//TBD
   }
 
   public void topAlgaeStop(){
@@ -92,7 +92,7 @@ public class IntakeSubsystem extends SubsystemBase {
     topIntakeAngle.setControl(new PositionDutyCycle(68)); //IDK :)
   }
   public void topIntakeAngleShoot(){
-    topIntakeAngle.setControl(new PositionDutyCycle(15.5));//TBD
+    topIntakeAngle.setControl(new PositionDutyCycle(13.5));//this is supposed to be 15.5 but mr smith wanted it faster
   }
   
   public void topIntakeAngleUp(){

@@ -94,7 +94,10 @@ public class Robot extends LoggedRobot {
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    DataLogManager.stop();
+    Logger.end();
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -103,7 +106,11 @@ public class Robot extends LoggedRobot {
   public void disabledExit() {}
 
   @Override
-  public void autonomousInit() {
+  public void autonomousInit() { 
+    // DataLogManager.stop();
+    //    DataLogManager.start();
+    // Logger.end();
+    // Logger.start();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
@@ -119,6 +126,10 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopInit() {
+    // DataLogManager.stop();
+    // DataLogManager.start();
+    // Logger.end();
+    // Logger.start();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

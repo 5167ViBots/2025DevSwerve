@@ -3,37 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.048630136986302,
-        "y": 5.317208904109589
+        "x": 3.8415,
+        "y": 4.8245
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.5043442037680532,
-        "y": 6.082811872856069
+        "x": 2.959204918032787,
+        "y": 6.0825696721311475
       },
       "isLocked": false,
-      "linkedName": "ID20a"
+      "linkedName": "sameSide"
     },
     {
       "anchor": {
-        "x": 1.292208904109589,
-        "y": 7.000085616438356
+        "x": 1.5703893442622954,
+        "y": 6.638319672131147
       },
       "prevControl": {
-        "x": 2.953907628703125,
-        "y": 6.232731122923242
+        "x": 2.8890368852459014,
+        "y": 5.943032786885246
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "HumanPlayer1"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7569296375266457,
+      "rotationDegrees": -53.992
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 0.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -55.0
+    "rotation": -53.992
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -60.25511870305775
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

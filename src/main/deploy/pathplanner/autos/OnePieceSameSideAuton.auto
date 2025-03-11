@@ -13,7 +13,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 0.2
           }
         },
         {
@@ -29,39 +29,15 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "SameSideToReef"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "L3"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 2.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralOut"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralOutStop"
+            "pathName": "SameSideToReef"
           }
         },
         {
@@ -73,13 +49,31 @@
         {
           "type": "named",
           "data": {
-            "name": "L1"
+            "name": "CoralOut"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralOutStop"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1"
           }
         },
         {
