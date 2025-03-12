@@ -83,7 +83,7 @@ public class IntakeSubsystem extends SubsystemBase {
     bottomAlgeaIntake.setControl(new DutyCycleOut(.2));
   }
 
-  public SetPoint FeedIntakeSetpoint = new SetPoint(75);
+  public SetPoint FeedIntakeSetpoint = new SetPoint(73); //75
   public void topIntakeAngleFeed(){
     topIntakeAngle.setControl(new PositionDutyCycle(FeedIntakeSetpoint.get())); //prev 74
   }

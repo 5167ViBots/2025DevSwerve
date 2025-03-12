@@ -34,14 +34,14 @@ public class L1Auto extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    liftsubsystem.L1();
+    liftsubsystem.L1Auto();
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    liftsubsystem.liftStop();
+  //  liftsubsystem.liftStop();
   }
 
   // Returns true when the command should end.

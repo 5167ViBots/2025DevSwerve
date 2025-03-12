@@ -129,7 +129,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
+            "waitTime": 1.75
           }
         },
         {
@@ -156,6 +156,12 @@
                       "type": "named",
                       "data": {
                         "name": "TopIntakeAngleShoot"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.4
                       }
                     },
                     {

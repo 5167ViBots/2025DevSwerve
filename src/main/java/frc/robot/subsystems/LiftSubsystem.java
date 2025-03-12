@@ -34,9 +34,11 @@ public class LiftSubsystem extends SubsystemBase{
 // kG .4 
 
      private TalonFX lift1, lift2, bottomAlgeaIntake;
-     public int l1Position = 5;
+     
+     public int l1PositionAuto = 0;
+     public int l1Position = 2;
      public int l2Position = 15;
-     public int l3Position = 24;
+     public int l3Position = 26;
      public int l4Position = 62; 
      public int humanPlayerStationPosition = 50;
      public String lastButtonPressed = "N/A";
@@ -102,6 +104,10 @@ public class LiftSubsystem extends SubsystemBase{
     //lift1.setControl(new PositionDutyCycle(oneBottom));
     lift1.setControl(new DutyCycleOut(-.4));
     //lift2.setControl(new PositionDutyCycle(twoBottom)); 
+  }
+
+  public void L1Auto(){
+    lift1.setControl(new MotionMagicVoltage(l1PositionAuto));
   }
 
   public void L1(){
