@@ -12,6 +12,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import com.ctre.phoenix6.Utils;
+import com.pathplanner.lib.commands.FollowPathCommand;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -59,6 +60,8 @@ public class Robot extends LoggedRobot {
     DataLogManager.start();
     // Record both DS control and joystick data
     DriverStation.startDataLog(DataLogManager.getLog());
+
+    FollowPathCommand.warmupCommand().schedule();
   }
 
   String LimeLightName = "limelight-righty";

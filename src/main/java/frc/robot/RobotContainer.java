@@ -14,8 +14,11 @@ import com.pathplanner.lib.auto.AutoBuilder;
 //import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.commands.PathfindThenFollowPath;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -174,6 +177,16 @@ IntakeSubsystem intake = new IntakeSubsystem();
         joystick.L1().whileTrue(new AlignLeft(drivetrain, lime, joystick::getLeftY));
         //joystick.cross().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.cross().whileTrue(new DebugSetAngleTo20(intake));
+        try {
+
+            PathPlannerPath path = PathPlannerPath.fromPathFile("teleophuman1");
+        joystick.triangle().whileTrue(AutoBuilder.followPath(path));
+
+        }
+        catch (Exception e)
+        {
+            DriverStation.reportError("Pathplanner Teleop Path Failed to load: " + e.getMessage(), e.getStackTrace());
+        }
         //joystick.L3().whileTrue(new DebugSetAngleDown(intake));
         //joystick.R3().whileTrue(new DebugSetAngleUp(intake));
         joystick.circle().whileTrue(drivetrain.applyRequest(() ->
