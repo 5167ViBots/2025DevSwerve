@@ -29,12 +29,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "L3"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "SameSideToReef"
@@ -68,12 +62,6 @@
           "type": "wait",
           "data": {
             "waitTime": 0.1
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "L1"
           }
         },
         {
