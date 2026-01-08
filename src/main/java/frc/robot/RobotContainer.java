@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 //import com.pathplanner.lib.auto.AutoBuilder;
@@ -22,41 +23,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AlignLeft;
-import frc.robot.commands.AlignRight;
-import frc.robot.commands.BottomAlgaeIn;
-import frc.robot.commands.BottomAlgaeIntakeIn;
-import frc.robot.commands.BottomAlgaeIntakeOut;
-import frc.robot.commands.BottomAlgaeIntakeSlightOut;
-import frc.robot.commands.BottomAlgaeOut;
-import frc.robot.commands.CoralIn;
-import frc.robot.commands.CoralOut;
-import frc.robot.commands.DebugSetAngleDown;
-import frc.robot.commands.DebugSetAngleTo20;
-import frc.robot.commands.DebugSetAngleUp;
-import frc.robot.commands.DebugSwitchBottomAlgaeIntakePosition;
-import frc.robot.commands.HumanPlayerStation;
-import frc.robot.commands.Init;
-import frc.robot.commands.L1;
-import frc.robot.commands.L2;
-import frc.robot.commands.L3;
-import frc.robot.commands.L4;
-import frc.robot.commands.LightCommand;
-import frc.robot.commands.ManualLiftDown;
-import frc.robot.commands.ManualLiftUp;
-import frc.robot.commands.TopAlgaeIn;
-import frc.robot.commands.TopAlgaeOut;
-import frc.robot.commands.TopIntakeAngleDown;
-import frc.robot.commands.TopIntakeAngleFeed;
-import frc.robot.commands.TopIntakeAngleShoot;
-import frc.robot.commands.TopIntakeAngleUp;
+
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LiftSubsystem;
-import frc.robot.subsystems.LightsSubsystem;
-import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.subsystems.SwitchSubsystem;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 public class RobotContainer {
 
@@ -90,6 +60,8 @@ IntakeSubsystem intake = new IntakeSubsystem();
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final SwerveRequest.RobotCentric forwardStraight = new SwerveRequest.RobotCentric()
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
+            private final TalonFX sampleMotor = new TalonFX(4);
 
     /* Path follower */
     //private final SendableChooser<Command> autoChooser;
